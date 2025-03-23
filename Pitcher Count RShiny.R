@@ -1,8 +1,6 @@
-#Duke Pitcher General (2024)
+#Pitcher General
 
 #App for Pitching
-
-#setwd("~/Desktop/Duke Baseball/2024 Season Game CSVs")
 
 library(plyr)
 library(dplyr)
@@ -35,20 +33,9 @@ bottom <- 18.29/12
 width <- (right - left) / 3
 height <- (top - bottom) / 3
 
-DUKE2024 <- read_csv("DUKE2024.csv")
+df <- read_csv("df.csv")
 
-DUKE2024 <- DUKE2024 %>%
-  mutate(PitcherTeam = ifelse(
-    PitcherTeam == "DUK_BLU", "Duke", PitcherTeam
-  ),
-  BatterTeam = ifelse(
-    BatterTeam == "DUK_BLU", "Duke", BatterTeam
-  ),
-  HomeTeam = ifelse(
-    HomeTeam == "DUK_BLU", "Duke", HomeTeam
-  ),
-  AwayTeam = ifelse(
-    AwayTeam == "DUK_BLU", "Duke", AwayTeam)) %>%
+df <- df %>%
   mutate(TaggedPitchType = ifelse(
     TaggedPitchType == "SInker", "Sinker", TaggedPitchType
   ),
@@ -56,10 +43,10 @@ DUKE2024 <- DUKE2024 %>%
   mutate(Count = paste0(Balls, "-", Strikes)) %>%
   filter(TaggedPitchType != "Undefined",
          TaggedPitchType != "Other",
-         PitcherTeam == "Duke")
+         PitcherTeam == "My_Team")
 
 #in-zone calculations, chase set up, whiff, custom game id
-DUKE2024 <- DUKE2024 %>%
+df <- df %>%
   mutate(in_zone = ifelse(PlateLocSide < left | PlateLocSide > right | 
                             PlateLocHeight < bottom | PlateLocHeight > top, "0", "1"),
          chase = ifelse(PitchCall %in% c("Foul", "FoulBall", "FoulBallFieldable", 
@@ -73,25 +60,25 @@ DUKE2024 <- DUKE2024 %>%
   ))
 
 #UI
-ui <- navbarPage("Duke 2024 Pitchers",
+ui <- navbarPage("Pitchers",
                  theme = "flatly",
                  tabPanel("Strike Zone",
                           sidebarLayout(
                             sidebarPanel(
                               selectInput("Team", label = "Select Team",
-                                          choices = levels(as.factor(DUKE2024$PitcherTeam))),
+                                          choices = levels(as.factor(df$PitcherTeam))),
                               selectInput("Pitcher", label = "Select Pitcher",
-                                          choices = levels(as.factor(DUKE2024$Pitcher))),
+                                          choices = levels(as.factor(df$Pitcher))),
                               pickerInput(
                                 inputId = "GameInput",
                                 label = HTML("Select Game"),
-                                choices = levels(as.factor(DUKE2024$CustomGameID)),
+                                choices = levels(as.factor(df$CustomGameID)),
                                 options = list(`actions-box` = TRUE),
                                 multiple = T),
                               checkboxGroupInput("Pitch", label = "Select Pitch Type",
-                                                 choices = levels(as.factor(DUKE2024$TaggedPitchType))),
+                                                 choices = levels(as.factor(df$TaggedPitchType))),
                               checkboxGroupInput("Count", label = "Select Count",
-                                                 choices = levels(as.factor(DUKE2024$Count))),
+                                                 choices = levels(as.factor(df$Count))),
                               width = 2),
                             mainPanel(
                               fluidRow(plotOutput("KZone"), plotOutput("Whiff"), DTOutput("WhiffStats"), plotOutput("Chase"), DTOutput("ChaseStats"))))),
@@ -108,14 +95,14 @@ server = function(input, output, session) {
     input$Team,
     updateSelectInput(session,
                       "Pitcher", "Select Pitcher",
-                      choices = levels(factor(filter(DUKE2024,
+                      choices = levels(factor(filter(df,
                                                      PitcherTeam == isolate(input$Team))$Pitcher))))
   #select pitcher --> show his pitches
   observeEvent(
     input$Pitcher,
     updateCheckboxGroupInput(session,
                              "Pitch", "Select Pitch Type",
-                             choices = levels(factor(filter(DUKE2024,
+                             choices = levels(factor(filter(df,
                                                             Pitcher == isolate(input$Pitcher))$TaggedPitchType))))
   
   #select pitcher --> update date range
@@ -123,12 +110,12 @@ server = function(input, output, session) {
     input$Pitcher,
     updatePickerInput(session,
                       inputId = "GameInput",
-                      choices = sort(unique(DUKE2024$CustomGameID[DUKE2024$Pitcher == input$Pitcher])),
-                      selected = sort(unique(DUKE2024$CustomGameID[DUKE2024$Pitcher == input$Pitcher]))))
+                      choices = sort(unique(df$CustomGameID[df$Pitcher == input$Pitcher])),
+                      selected = sort(unique(df$CustomGameID[df$Pitcher == input$Pitcher]))))
   
   #start with strike zone plot
   output$KZone <- renderPlot({
-    DUKE2024 %>%
+    df %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              Count %in% input$Count,
@@ -168,7 +155,7 @@ server = function(input, output, session) {
     
   })
   output$Chase <- renderPlot({
-    DUKE2024 %>%
+    df %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              chase == 1,
@@ -209,7 +196,7 @@ server = function(input, output, session) {
             legend.position = "none")
   })
   output$Whiff <- renderPlot({
-    DUKE2024 %>%
+    df %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              whiff == 1,
@@ -251,7 +238,7 @@ server = function(input, output, session) {
   })
   
   output$WhiffStats <- renderDT({
-    whiffdf <- DUKE2024 %>%
+    whiffdf <- df %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              whiff == 1,
@@ -266,7 +253,7 @@ server = function(input, output, session) {
   })
   
   output$ChaseStats <- renderDT({
-    chasedf <- DUKE2024 %>%
+    chasedf <- df %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              chase == 1,
@@ -285,7 +272,7 @@ server = function(input, output, session) {
     heat_colors_interpolated <- colorRampPalette(paletteer_d("RColorBrewer::RdBu", 
                                                              n = 9,
                                                              direction = -1))(16)
-    FB <- DUKE2024 %>%
+    FB <- df %>%
       filter(TaggedPitchType == "Fastball")
     
     FBplot <- FB %>%
@@ -320,7 +307,7 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
-    CH <- DUKE2024 %>%
+    CH <- df %>%
       filter(TaggedPitchType == "Changeup")
     
     CHplot <- CH %>%
@@ -355,7 +342,7 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
-    SL <- DUKE2024 %>%
+    SL <- df %>%
       filter(TaggedPitchType == "Slider")
     
     SLplot <- SL %>%
@@ -390,7 +377,7 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
-    CB <- DUKE2024 %>%
+    CB <- df %>%
       filter(TaggedPitchType == "Curveball")
     
     CBplot <- CB %>%
@@ -425,7 +412,7 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
-    CUT <- DUKE2024 %>%
+    CUT <- df %>%
       filter(TaggedPitchType == "Cutter")
     
     CUTplot <- CUT %>%
@@ -460,7 +447,7 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
-    SNK <- DUKE2024 %>%
+    SNK <- df %>%
       filter(TaggedPitchType == "Sinker")
     
     SNKplot <- SNK %>%
@@ -495,7 +482,7 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
-    FS <- DUKE2024 %>%
+    FS <- df %>%
       filter(TaggedPitchType == "Splitter")
     
     FSplot <- FS %>%
