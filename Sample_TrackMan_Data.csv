@@ -1,0 +1,101 @@
+PitchNo,Date,Time,Pitcher,PitcherId,PitcherTeam,PitcherThrows,Batter,BatterId,BatterTeam,TaggedPitchType,PitchCall,ExitSpeed,PlateLocSide,PlateLocHeight,RelSpeed,SpinRate,InducedVertBreak,HorzBreak,tilt,Count,CustomGameID
+1,4/1/2025,2:25.1,"Smith, Jake",1000000077,Metro City Knights,Right,"King, Drew",2000000078,Metro City Knights,Fastball,BallInDirt,82.5,0.41,2.58,97.5,2165.0,14.31,-13.9,11.9,1-1,Game003
+2,4/2/2025,10:35.7,"Smith, Jake",1000000091,Metro City Knights,Right,"Rivera, Nate",2000000084,Metro City Knights,Changeup,BallCalled,82.3,-0.58,2.75,88.8,2377.0,15.06,-17.34,7.03,0-0,Game001
+3,4/1/2025,7:59.8,"Lee, Chris",1000000068,Metro City Knights,Right,"King, Drew",2000000013,Metro City Knights,Changeup,InPlay,58.0,0.15,2.64,87.4,2330.0,10.61,-9.8,4.89,2-1,Game002
+4,4/1/2025,8:20.1,"Johnson, Max",1000000046,Bayview Bears,Left,"Allen, Troy",2000000065,Bayview Bears,Cutter,Foul,84.5,-0.6,3.73,89.9,1885.0,9.24,-14.62,11.87,3-2,Game003
+5,4/1/2025,5:23.9,"Lee, Chris",1000000093,Metro City Knights,Left,"Allen, Troy",2000000074,Metro City Knights,Curveball,InPlay,82.7,-0.49,2.18,91.9,2495.0,21.38,-8.6,7.27,3-2,Game001
+6,4/2/2025,9:59.8,"Smith, Jake",1000000061,Metro City Knights,Right,"Allen, Troy",2000000050,Metro City Knights,Slider,BallInDirt,92.0,-1.13,2.23,92.7,2476.0,11.61,-19.34,9.55,1-0,Game003
+7,4/1/2025,1:24.6,"Johnson, Max",1000000068,Bayview Bears,Right,"Allen, Troy",2000000037,Metro City Knights,Curveball,BallCalled,103.5,-0.74,2.19,91.3,2075.0,11.03,-8.01,7.66,1-0,Game001
+8,4/1/2025,9:23.0,"Lee, Chris",1000000075,Bayview Bears,Left,"Allen, Troy",2000000063,Bayview Bears,Curveball,BallCalled,96.3,-1.08,2.22,93.1,2279.0,6.39,-5.0,6.4,3-2,Game002
+9,4/1/2025,8:23.2,"Johnson, Max",1000000015,Bayview Bears,Left,"Allen, Troy",2000000097,Bayview Bears,Changeup,BallInDirt,82.3,-0.78,2.18,88.2,2299.0,12.44,-21.96,11.08,3-2,Game003
+10,4/2/2025,1:07.2,"Lee, Chris",1000000089,Metro City Knights,Right,"Allen, Troy",2000000037,Bayview Bears,Curveball,BallInDirt,73.9,0.84,3.09,96.3,2252.0,9.71,-7.76,11.52,2-1,Game001
+11,4/1/2025,3:32.4,"Johnson, Max",1000000089,Bayview Bears,Right,"Rivera, Nate",2000000049,Bayview Bears,Fastball,Foul,110.7,-0.76,3.21,91.8,2090.0,21.57,-2.63,8.85,1-1,Game003
+12,4/1/2025,10:38.9,"Smith, Jake",1000000047,Metro City Knights,Left,"King, Drew",2000000097,Bayview Bears,Changeup,BallCalled,85.6,2.11,2.21,95.4,2066.0,19.04,-17.26,4.82,1-0,Game003
+13,4/1/2025,9:27.6,"Smith, Jake",1000000084,Metro City Knights,Right,"Allen, Troy",2000000081,Metro City Knights,Fastball,InPlay,85.1,0.39,2.08,93.0,2195.0,12.25,0.04,8.91,1-1,Game003
+14,4/1/2025,9:07.1,"Johnson, Max",1000000038,Metro City Knights,Right,"Rivera, Nate",2000000029,Bayview Bears,Slider,StrikeSwinging,84.8,0.15,2.74,93.4,2435.0,24.01,-7.49,10.78,2-1,Game003
+15,4/2/2025,1:47.6,"Lee, Chris",1000000099,Metro City Knights,Right,"Rivera, Nate",2000000078,Bayview Bears,Changeup,StrikeSwinging,87.0,-0.69,2.22,93.7,2309.0,18.93,-14.23,7.04,3-2,Game001
+16,4/1/2025,7:23.4,"Smith, Jake",1000000032,Bayview Bears,Left,"King, Drew",2000000090,Bayview Bears,Slider,BallInDirt,83.6,0.56,2.82,93.3,2126.0,13.7,-10.33,10.37,1-1,Game002
+17,4/2/2025,3:43.7,"Smith, Jake",1000000093,Bayview Bears,Left,"Allen, Troy",2000000050,Metro City Knights,Changeup,Foul,79.3,-0.46,2.6,93.9,2354.0,5.0,-6.65,9.97,3-2,Game001
+18,4/2/2025,6:26.2,"Smith, Jake",1000000022,Metro City Knights,Left,"King, Drew",2000000062,Bayview Bears,Cutter,StrikeSwinging,79.5,0.1,1.74,96.0,1630.0,24.16,-9.54,11.16,3-2,Game001
+19,4/2/2025,1:34.4,"Johnson, Max",1000000009,Metro City Knights,Left,"Allen, Troy",2000000097,Bayview Bears,Curveball,BallCalled,84.7,2.05,3.27,92.6,2430.0,9.44,-6.77,10.24,0-0,Game001
+20,4/1/2025,3:00.4,"Johnson, Max",1000000068,Metro City Knights,Left,"Rivera, Nate",2000000051,Metro City Knights,Cutter,BallInDirt,79.6,-0.08,3.4,94.1,1852.0,8.42,-15.52,8.05,1-1,Game002
+21,4/2/2025,10:54.6,"Lee, Chris",1000000099,Bayview Bears,Left,"Rivera, Nate",2000000037,Bayview Bears,Slider,InPlay,77.9,0.92,2.19,91.7,2128.0,19.09,-8.98,12.39,1-1,Game003
+22,4/1/2025,11:08.9,"Lee, Chris",1000000033,Metro City Knights,Left,"Rivera, Nate",2000000096,Metro City Knights,Curveball,BallInDirt,86.1,-0.56,2.31,96.3,1976.0,24.76,-18.48,9.68,3-2,Game003
+23,4/2/2025,10:59.2,"Lee, Chris",1000000051,Metro City Knights,Right,"Rivera, Nate",2000000087,Metro City Knights,Changeup,InPlay,82.5,-0.03,2.64,90.0,1941.0,20.54,-10.67,9.95,2-1,Game003
+24,4/2/2025,7:48.3,"Johnson, Max",1000000094,Bayview Bears,Right,"King, Drew",2000000078,Metro City Knights,Curveball,BallInDirt,100.0,1.42,2.67,97.4,2432.0,17.26,-15.42,8.13,0-0,Game002
+25,4/2/2025,4:29.4,"Johnson, Max",1000000009,Bayview Bears,Right,"Allen, Troy",2000000029,Metro City Knights,Fastball,BallInDirt,58.5,-0.5,2.83,91.9,2106.0,17.38,-14.41,9.11,3-2,Game003
+26,4/2/2025,7:38.3,"Lee, Chris",1000000018,Metro City Knights,Right,"Allen, Troy",2000000050,Metro City Knights,Curveball,BallInDirt,95.9,1.45,3.51,87.7,2269.0,18.41,-2.58,8.23,1-0,Game002
+27,4/2/2025,7:58.2,"Lee, Chris",1000000057,Bayview Bears,Right,"King, Drew",2000000080,Bayview Bears,Fastball,InPlay,97.5,0.57,2.41,92.4,2191.0,18.04,-3.45,9.65,1-0,Game003
+28,4/2/2025,6:27.1,"Johnson, Max",1000000095,Bayview Bears,Right,"Allen, Troy",2000000004,Metro City Knights,Curveball,InPlay,64.3,-0.45,2.1,90.0,2295.0,16.12,-6.35,13.42,0-0,Game003
+29,4/2/2025,10:44.8,"Lee, Chris",1000000000,Metro City Knights,Right,"Rivera, Nate",2000000028,Metro City Knights,Fastball,BallInDirt,81.6,0.51,1.81,94.5,2215.0,15.42,-16.55,7.26,2-1,Game001
+30,4/2/2025,5:05.3,"Smith, Jake",1000000068,Bayview Bears,Left,"Allen, Troy",2000000003,Bayview Bears,Slider,StrikeSwinging,81.3,0.78,2.13,90.0,1943.0,14.75,-11.9,6.77,3-2,Game002
+31,4/1/2025,11:57.6,"Johnson, Max",1000000003,Metro City Knights,Left,"Rivera, Nate",2000000009,Metro City Knights,Cutter,Foul,70.9,0.5,2.48,90.7,2399.0,11.98,-2.72,12.94,1-1,Game001
+32,4/1/2025,9:38.0,"Lee, Chris",1000000015,Bayview Bears,Right,"King, Drew",2000000055,Bayview Bears,Changeup,Foul,77.2,-1.26,3.4,86.3,2101.0,13.88,-9.15,9.58,0-0,Game001
+33,4/2/2025,1:56.8,"Johnson, Max",1000000023,Metro City Knights,Right,"Allen, Troy",2000000016,Bayview Bears,Curveball,Foul,73.9,-0.58,2.24,90.6,1889.0,8.23,3.92,8.66,2-1,Game001
+34,4/2/2025,4:12.8,"Smith, Jake",1000000079,Metro City Knights,Left,"King, Drew",2000000073,Bayview Bears,Cutter,InPlay,102.5,-0.2,2.61,84.7,2114.0,14.61,-7.64,12.08,1-1,Game002
+35,4/2/2025,3:38.5,"Johnson, Max",1000000001,Metro City Knights,Right,"Allen, Troy",2000000016,Metro City Knights,Changeup,InPlay,94.4,-0.06,2.49,87.2,2500.0,11.05,-8.85,8.79,1-0,Game002
+36,4/1/2025,8:26.8,"Johnson, Max",1000000091,Bayview Bears,Right,"Rivera, Nate",2000000083,Metro City Knights,Changeup,StrikeSwinging,97.7,0.5,3.09,94.3,2370.0,10.59,-11.85,13.65,1-0,Game003
+37,4/2/2025,5:32.2,"Johnson, Max",1000000031,Metro City Knights,Left,"King, Drew",2000000087,Metro City Knights,Fastball,Foul,92.2,0.14,3.76,94.4,2130.0,15.72,-9.2,11.36,1-1,Game001
+38,4/1/2025,10:43.7,"Johnson, Max",1000000090,Bayview Bears,Right,"Allen, Troy",2000000068,Bayview Bears,Slider,Foul,73.7,-1.07,2.23,93.3,2130.0,20.57,-10.91,9.02,0-0,Game003
+39,4/1/2025,11:53.7,"Smith, Jake",1000000083,Metro City Knights,Left,"Rivera, Nate",2000000033,Metro City Knights,Slider,BallInDirt,79.8,0.3,2.26,89.1,2136.0,18.67,-5.75,14.31,1-0,Game001
+40,4/1/2025,9:51.0,"Johnson, Max",1000000023,Metro City Knights,Right,"King, Drew",2000000005,Metro City Knights,Cutter,InPlay,89.9,0.49,3.02,91.9,2615.0,8.72,-4.26,8.79,3-2,Game002
+41,4/1/2025,1:57.3,"Johnson, Max",1000000011,Bayview Bears,Left,"King, Drew",2000000052,Metro City Knights,Slider,Foul,72.8,0.45,2.84,92.0,2276.0,11.04,-14.72,11.48,1-1,Game002
+42,4/1/2025,7:01.2,"Lee, Chris",1000000049,Metro City Knights,Left,"Allen, Troy",2000000065,Bayview Bears,Curveball,StrikeSwinging,92.1,0.86,3.42,88.5,2286.0,18.76,-17.99,10.6,1-1,Game002
+43,4/2/2025,1:36.0,"Johnson, Max",1000000034,Metro City Knights,Left,"Allen, Troy",2000000076,Bayview Bears,Slider,StrikeSwinging,82.6,0.67,2.79,96.5,2406.0,11.07,-21.02,12.6,1-0,Game001
+44,4/2/2025,8:16.0,"Lee, Chris",1000000032,Bayview Bears,Right,"Allen, Troy",2000000042,Metro City Knights,Cutter,Foul,81.3,0.37,2.32,94.6,2248.0,14.1,-6.95,13.12,0-0,Game002
+45,4/2/2025,2:01.5,"Smith, Jake",1000000032,Metro City Knights,Left,"Rivera, Nate",2000000074,Metro City Knights,Slider,InPlay,92.1,-0.06,2.8,91.3,2148.0,17.2,-16.62,10.06,3-2,Game001
+46,4/2/2025,7:36.0,"Smith, Jake",1000000060,Metro City Knights,Right,"Allen, Troy",2000000022,Metro City Knights,Curveball,StrikeSwinging,89.4,-1.33,3.05,92.1,2161.0,11.13,-22.92,8.49,0-0,Game003
+47,4/2/2025,1:18.1,"Smith, Jake",1000000050,Metro City Knights,Right,"King, Drew",2000000054,Metro City Knights,Fastball,BallInDirt,81.4,0.34,2.91,92.6,2186.0,15.42,-7.67,10.92,2-1,Game001
+48,4/1/2025,5:43.9,"Smith, Jake",1000000042,Metro City Knights,Right,"King, Drew",2000000079,Bayview Bears,Cutter,StrikeSwinging,96.6,0.17,2.75,85.9,2193.0,9.66,4.96,8.64,2-1,Game003
+49,4/2/2025,6:31.6,"Lee, Chris",1000000011,Bayview Bears,Right,"Allen, Troy",2000000094,Bayview Bears,Fastball,BallCalled,74.2,0.22,3.03,91.3,2346.0,12.59,-10.04,14.03,1-0,Game001
+50,4/2/2025,4:54.7,"Johnson, Max",1000000066,Bayview Bears,Left,"Allen, Troy",2000000074,Bayview Bears,Fastball,BallCalled,91.2,-1.02,3.08,90.0,2210.0,16.28,-4.97,10.27,1-0,Game003
+51,4/1/2025,11:16.5,"Smith, Jake",1000000064,Metro City Knights,Left,"King, Drew",2000000015,Bayview Bears,Fastball,InPlay,90.9,-0.86,3.19,89.0,2347.0,8.63,-9.51,9.27,1-0,Game002
+52,4/2/2025,8:04.3,"Johnson, Max",1000000032,Bayview Bears,Right,"Rivera, Nate",2000000007,Metro City Knights,Changeup,Foul,81.9,0.84,2.82,91.2,2184.0,16.76,-10.59,10.37,2-1,Game003
+53,4/1/2025,2:05.5,"Lee, Chris",1000000039,Metro City Knights,Right,"Allen, Troy",2000000003,Metro City Knights,Changeup,InPlay,88.3,-0.03,2.42,97.4,2216.0,14.92,-4.49,7.31,0-0,Game002
+54,4/2/2025,11:47.0,"Lee, Chris",1000000073,Bayview Bears,Left,"Allen, Troy",2000000003,Metro City Knights,Fastball,InPlay,72.5,0.55,2.57,93.9,1800.0,17.21,-11.74,8.06,0-0,Game002
+55,4/1/2025,9:59.5,"Lee, Chris",1000000042,Metro City Knights,Right,"King, Drew",2000000055,Bayview Bears,Cutter,InPlay,94.2,0.02,3.1,90.3,2383.0,15.9,-8.4,12.4,1-0,Game003
+56,4/2/2025,3:19.3,"Smith, Jake",1000000043,Metro City Knights,Left,"Allen, Troy",2000000024,Metro City Knights,Curveball,InPlay,83.2,0.02,2.09,93.7,2269.0,20.46,-8.07,8.69,3-2,Game001
+57,4/2/2025,3:25.2,"Johnson, Max",1000000028,Metro City Knights,Right,"Rivera, Nate",2000000066,Bayview Bears,Curveball,BallInDirt,79.8,0.75,2.68,96.2,2400.0,15.5,-14.01,7.91,0-0,Game001
+58,4/1/2025,3:19.6,"Johnson, Max",1000000012,Metro City Knights,Right,"King, Drew",2000000095,Bayview Bears,Slider,BallInDirt,95.5,-0.41,2.3,94.8,1621.0,13.28,-4.05,11.07,2-1,Game001
+59,4/1/2025,4:40.0,"Johnson, Max",1000000011,Metro City Knights,Left,"Allen, Troy",2000000066,Metro City Knights,Cutter,StrikeSwinging,78.0,0.08,2.51,92.2,2618.0,15.49,-11.05,12.37,1-1,Game001
+60,4/1/2025,8:38.1,"Lee, Chris",1000000094,Metro City Knights,Right,"King, Drew",2000000026,Metro City Knights,Changeup,BallCalled,70.9,-0.37,3.14,90.1,2172.0,17.17,-14.53,11.44,1-1,Game001
+61,4/1/2025,8:00.8,"Smith, Jake",1000000045,Bayview Bears,Left,"Allen, Troy",2000000092,Metro City Knights,Fastball,InPlay,69.4,-0.35,2.6,94.1,2422.0,15.2,-6.78,11.99,1-1,Game002
+62,4/1/2025,9:49.6,"Lee, Chris",1000000001,Metro City Knights,Right,"Allen, Troy",2000000031,Bayview Bears,Slider,StrikeSwinging,91.1,-0.25,2.52,93.2,1992.0,15.16,-15.39,8.49,3-2,Game001
+63,4/1/2025,10:34.6,"Lee, Chris",1000000034,Bayview Bears,Right,"Allen, Troy",2000000049,Metro City Knights,Curveball,BallCalled,72.2,0.18,1.82,94.7,2323.0,12.19,-9.83,7.16,1-0,Game002
+64,4/1/2025,10:47.8,"Johnson, Max",1000000086,Metro City Knights,Right,"Rivera, Nate",2000000060,Bayview Bears,Changeup,Foul,102.5,-0.38,2.87,93.9,1989.0,12.35,-10.05,13.0,2-1,Game002
+65,4/1/2025,4:59.0,"Lee, Chris",1000000080,Bayview Bears,Left,"Rivera, Nate",2000000050,Metro City Knights,Changeup,BallInDirt,64.2,1.0,2.82,95.1,2075.0,9.39,-3.48,9.35,3-2,Game002
+66,4/2/2025,2:00.4,"Johnson, Max",1000000089,Bayview Bears,Right,"King, Drew",2000000018,Bayview Bears,Fastball,BallCalled,102.0,-0.72,3.58,90.4,2583.0,22.0,-7.15,9.5,2-1,Game003
+67,4/2/2025,5:31.6,"Smith, Jake",1000000007,Bayview Bears,Right,"Allen, Troy",2000000020,Bayview Bears,Curveball,Foul,87.1,-0.15,2.35,96.0,2162.0,10.02,-10.15,12.66,2-1,Game003
+68,4/1/2025,9:40.2,"Johnson, Max",1000000092,Metro City Knights,Right,"Allen, Troy",2000000004,Metro City Knights,Cutter,BallCalled,84.0,-0.35,2.61,92.6,2243.0,12.23,-5.09,11.11,1-0,Game002
+69,4/2/2025,3:47.2,"Smith, Jake",1000000025,Metro City Knights,Right,"Rivera, Nate",2000000081,Bayview Bears,Changeup,BallInDirt,79.6,1.16,2.62,98.2,2374.0,12.13,-1.66,10.91,1-1,Game003
+70,4/2/2025,4:23.5,"Johnson, Max",1000000073,Bayview Bears,Left,"Allen, Troy",2000000091,Bayview Bears,Fastball,BallInDirt,89.0,0.16,3.29,89.9,2299.0,18.58,-6.65,14.33,1-0,Game001
+71,4/2/2025,8:32.7,"Lee, Chris",1000000089,Metro City Knights,Left,"Rivera, Nate",2000000041,Metro City Knights,Cutter,StrikeSwinging,84.6,0.83,2.45,97.2,2230.0,13.82,-9.94,8.71,3-2,Game001
+72,4/2/2025,4:10.0,"Lee, Chris",1000000033,Bayview Bears,Right,"Allen, Troy",2000000060,Bayview Bears,Curveball,InPlay,96.0,-1.19,2.64,92.6,2273.0,19.99,-17.87,11.86,3-2,Game002
+73,4/1/2025,8:35.5,"Smith, Jake",1000000006,Metro City Knights,Left,"King, Drew",2000000021,Metro City Knights,Changeup,BallCalled,86.1,0.21,2.8,90.0,2681.0,12.31,-16.39,10.11,3-2,Game001
+74,4/2/2025,8:19.2,"Smith, Jake",1000000067,Bayview Bears,Right,"Allen, Troy",2000000020,Bayview Bears,Cutter,BallCalled,86.5,0.71,2.59,90.5,2188.0,16.12,-11.83,10.54,1-0,Game002
+75,4/1/2025,9:34.8,"Smith, Jake",1000000057,Bayview Bears,Right,"Allen, Troy",2000000069,Metro City Knights,Cutter,Foul,81.4,0.07,2.28,91.0,2240.0,11.66,-13.66,13.06,2-1,Game002
+76,4/2/2025,2:45.1,"Johnson, Max",1000000074,Metro City Knights,Right,"Rivera, Nate",2000000000,Metro City Knights,Cutter,BallInDirt,84.4,0.85,2.6,93.3,2410.0,23.58,-11.12,11.02,2-1,Game001
+77,4/2/2025,2:53.2,"Johnson, Max",1000000028,Bayview Bears,Left,"Allen, Troy",2000000004,Bayview Bears,Changeup,BallCalled,88.1,-0.41,3.04,93.6,2421.0,10.25,-9.66,11.08,0-0,Game003
+78,4/2/2025,9:35.0,"Smith, Jake",1000000035,Metro City Knights,Left,"Allen, Troy",2000000011,Bayview Bears,Changeup,BallInDirt,67.9,1.13,1.99,90.3,2437.0,16.24,-6.82,12.15,3-2,Game001
+79,4/1/2025,4:32.4,"Lee, Chris",1000000088,Bayview Bears,Left,"Rivera, Nate",2000000089,Bayview Bears,Slider,BallCalled,71.5,1.84,2.57,91.9,2328.0,17.54,-10.42,9.27,2-1,Game001
+80,4/2/2025,4:55.7,"Johnson, Max",1000000020,Bayview Bears,Left,"King, Drew",2000000045,Bayview Bears,Curveball,StrikeSwinging,92.4,-0.29,2.15,98.4,1971.0,16.66,-7.08,8.32,0-0,Game002
+81,4/1/2025,7:02.0,"Johnson, Max",1000000035,Metro City Knights,Left,"King, Drew",2000000033,Bayview Bears,Fastball,InPlay,86.7,-0.36,3.1,97.2,2527.0,14.26,-9.61,7.91,2-1,Game002
+82,4/2/2025,1:47.2,"Johnson, Max",1000000009,Metro City Knights,Left,"Rivera, Nate",2000000048,Metro City Knights,Cutter,BallCalled,83.2,1.16,1.74,93.3,1971.0,14.48,-21.85,6.07,3-2,Game002
+83,4/1/2025,6:54.5,"Smith, Jake",1000000072,Metro City Knights,Left,"Rivera, Nate",2000000077,Bayview Bears,Slider,BallInDirt,85.2,1.26,2.22,92.1,2261.0,15.18,-15.64,14.11,1-1,Game002
+84,4/2/2025,6:37.2,"Smith, Jake",1000000023,Bayview Bears,Left,"Rivera, Nate",2000000089,Metro City Knights,Fastball,StrikeSwinging,88.5,-0.42,2.69,92.4,2049.0,14.41,-10.86,7.79,3-2,Game003
+85,4/1/2025,6:07.1,"Smith, Jake",1000000063,Metro City Knights,Left,"Rivera, Nate",2000000044,Metro City Knights,Slider,BallCalled,79.6,-0.34,3.28,93.8,2187.0,18.86,-17.26,9.56,1-0,Game003
+86,4/1/2025,5:29.0,"Smith, Jake",1000000098,Bayview Bears,Right,"Rivera, Nate",2000000026,Bayview Bears,Changeup,Foul,77.2,-0.23,2.47,88.9,2266.0,23.84,-6.4,9.45,2-1,Game003
+87,4/2/2025,1:04.2,"Smith, Jake",1000000048,Bayview Bears,Left,"King, Drew",2000000072,Metro City Knights,Cutter,InPlay,87.0,-1.08,2.22,91.2,2264.0,12.77,-0.82,10.61,2-1,Game002
+88,4/1/2025,4:34.0,"Lee, Chris",1000000098,Metro City Knights,Left,"King, Drew",2000000025,Metro City Knights,Fastball,BallCalled,75.2,-0.73,3.44,87.0,2284.0,9.52,-2.69,11.63,1-0,Game002
+89,4/2/2025,1:43.4,"Lee, Chris",1000000035,Metro City Knights,Left,"Rivera, Nate",2000000046,Metro City Knights,Fastball,StrikeSwinging,89.1,-0.8,1.78,93.2,2523.0,14.65,-11.28,11.72,1-0,Game002
+90,4/2/2025,6:34.8,"Smith, Jake",1000000081,Bayview Bears,Left,"Allen, Troy",2000000085,Metro City Knights,Fastball,Foul,68.0,-0.61,1.4,93.9,2291.0,25.32,-1.06,8.83,1-1,Game003
+91,4/2/2025,5:23.0,"Johnson, Max",1000000095,Bayview Bears,Left,"Rivera, Nate",2000000055,Bayview Bears,Fastball,StrikeSwinging,95.3,-0.03,2.72,90.6,2151.0,11.79,-9.11,9.67,2-1,Game002
+92,4/2/2025,5:30.2,"Smith, Jake",1000000023,Metro City Knights,Left,"Allen, Troy",2000000093,Metro City Knights,Fastball,StrikeSwinging,89.7,0.19,2.25,96.7,2393.0,21.56,-12.02,10.57,2-1,Game001
+93,4/2/2025,1:51.4,"Lee, Chris",1000000022,Metro City Knights,Left,"Rivera, Nate",2000000062,Bayview Bears,Slider,Foul,87.6,1.24,1.99,88.3,2438.0,21.71,-13.68,9.5,1-1,Game001
+94,4/2/2025,7:32.2,"Lee, Chris",1000000061,Metro City Knights,Left,"Rivera, Nate",2000000047,Bayview Bears,Cutter,StrikeSwinging,94.8,-0.8,2.85,87.6,1954.0,12.79,-11.81,13.21,0-0,Game002
+95,4/2/2025,2:24.9,"Johnson, Max",1000000095,Metro City Knights,Left,"King, Drew",2000000060,Metro City Knights,Changeup,Foul,101.7,0.79,2.62,92.7,2319.0,17.28,-12.33,10.98,1-1,Game001
+96,4/2/2025,6:57.2,"Lee, Chris",1000000036,Metro City Knights,Left,"Allen, Troy",2000000080,Bayview Bears,Changeup,BallCalled,95.1,-0.17,2.22,95.1,2340.0,21.51,-8.98,11.47,3-2,Game001
+97,4/2/2025,8:45.7,"Smith, Jake",1000000011,Bayview Bears,Left,"Allen, Troy",2000000025,Bayview Bears,Changeup,Foul,66.6,-0.04,1.86,97.1,2140.0,13.48,-9.04,11.33,2-1,Game003
+98,4/2/2025,2:31.5,"Johnson, Max",1000000054,Bayview Bears,Right,"King, Drew",2000000035,Bayview Bears,Changeup,Foul,72.2,0.54,2.94,90.6,2475.0,14.19,-9.98,12.35,1-0,Game002
+99,4/2/2025,7:01.9,"Smith, Jake",1000000012,Bayview Bears,Right,"King, Drew",2000000000,Metro City Knights,Slider,InPlay,78.8,-0.9,2.83,95.2,2170.0,12.67,-7.38,10.36,3-2,Game002
+100,4/1/2025,2:25.0,"Smith, Jake",1000000022,Bayview Bears,Left,"King, Drew",2000000007,Bayview Bears,Curveball,Foul,85.3,0.31,2.45,91.9,2225.0,10.94,-2.86,7.41,2-1,Game003
