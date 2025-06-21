@@ -28,8 +28,8 @@ library(shinyWidgets)
 
 left <- -8.5/12
 right <- 8.5/12
-top <- 44.08/12
-bottom <- 18.29/12
+top <- 43/12
+bottom <- 20/12
 width <- (right - left) / 3
 height <- (top - bottom) / 3
 
@@ -77,6 +77,8 @@ ui <- navbarPage("Pitchers",
                                 multiple = T),
                               checkboxGroupInput("Pitch", label = "Select Pitch Type",
                                                  choices = levels(as.factor(df$TaggedPitchType))),
+                              checkboxGroupInput("Result", label = "Select Play Result",
+                                                 choices = levels(as.factor(df$PlayResult))),
                               checkboxGroupInput("Count", label = "Select Count",
                                                  choices = levels(as.factor(df$Count))),
                               width = 2),
@@ -118,6 +120,7 @@ server = function(input, output, session) {
     df %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              TaggedPitchType %in% input$Pitch,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -159,6 +162,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              chase == 1,
+             PlayResult %in% input$Result,
              TaggedPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -200,6 +204,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              whiff == 1,
+             PlayResult %in% input$Result,
              TaggedPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -242,6 +247,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              whiff == 1,
+             PlayResult %in% input$Result,
              TaggedPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
@@ -257,6 +263,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              chase == 1,
+             PlayResult %in% input$Result,
              TaggedPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
@@ -279,6 +286,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
@@ -314,6 +322,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
@@ -349,6 +358,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
@@ -384,6 +394,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
@@ -419,6 +430,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
@@ -454,6 +466,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
@@ -489,6 +502,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
