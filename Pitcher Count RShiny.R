@@ -33,7 +33,7 @@ bottom <- 21.06/12
 width <- (right - left) / 3
 height <- (top - bottom) / 3
 
-df <- read_csv("20250620-ThomasMoreStadium-1_unverified copy.csv")
+df <- read_csv("20250621-ThomasMoreStadium-1_unverified.csv")
 
 df <- df %>%
   mutate(TaggedPitchType = ifelse(
