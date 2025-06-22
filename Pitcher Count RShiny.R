@@ -57,7 +57,19 @@ df <- df %>%
     chase = as.numeric(chase)) %>%
   mutate(CustomGameID = paste0(
     Date, ":", AwayTeam, " at ", HomeTeam
-  ))
+  )) %>%
+  mutate(
+    Direction = as.numeric(Direction),
+    field_side = case_when(
+      BatterSide == "Right" & Direction <= -45 ~ "Left",
+      BatterSide == "Right" & Direction > -45 & Direction < 45 ~ "Center",
+      BatterSide == "Right" & Direction >= 45 ~ "Right",
+      BatterSide == "Left" & Direction <= -45 ~ "Right",
+      BatterSide == "Left" & Direction > -45 & Direction < 45 ~ "Center",
+      BatterSide == "Left" & Direction >= 45 ~ "Left",
+      TRUE ~ NA_character_
+    )
+  )
 
 #UI
 ui <- navbarPage("Pitchers",
@@ -83,7 +95,7 @@ ui <- navbarPage("Pitchers",
                                                  choices = levels(as.factor(df$Count))),
                               width = 2),
                             mainPanel(
-                              fluidRow(plotOutput("KZone"), plotOutput("Whiff"), DTOutput("WhiffStats"), plotOutput("Chase"), DTOutput("ChaseStats"))))),
+                              fluidRow(plotOutput("KZone"), plotOutput("InPlay"), DTOutput("InPlayStats"), plotOutput("Whiff"), DTOutput("WhiffStats"), plotOutput("Chase"), DTOutput("ChaseStats"))))),
                  tabPanel("Heatmap",
                           mainPanel(
                             fluidRow(plotOutput("Heatmap"))))
@@ -155,6 +167,48 @@ server = function(input, output, session) {
             panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(),
             legend.position = "none")
+  })
+    output$InPlay <- renderPlot({
+      df %>%
+        filter(PitcherTeam == input$Team,
+               Pitcher == input$Pitcher,
+               PlayResult %in% input$Result,
+               Count %in% input$Count,
+               TaggedPitchType %in% input$Pitch,
+               PitchCall == "InPlay",
+               CustomGameID %in% c(input$GameInput)) %>%
+        ggplot(TestTrackMan, mapping = aes(x = PlateLocSide, y = PlateLocHeight)) +
+        geom_point(aes(color = TaggedPitchType), size = 3) +
+        scale_color_manual(values = c(Changeup = "blue",
+                                      Fastball = "black",
+                                      Slider = "orange",
+                                      Curveball = "red",
+                                      Cutter = "green",
+                                      Sinker = "grey",
+                                      Splitter = "purple")) +
+        geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+        geom_segment(x = left, y = top, xend = right, yend = top) +
+        geom_segment(x = left, y = bottom, xend = left, yend = top) +
+        geom_segment(x = right, y = bottom, xend = right, yend = top) +
+        geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+        geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+        geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+        geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+        geom_segment(x = left, y = 0, xend = right, yend = 0) +
+        geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+        geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+        geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+        geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+        xlim(-2.5, 2.5) + ylim(-.5, 5) +
+        labs(title = "Strike Zone",
+             subtitle = "In Play",
+             x = "",
+             y = "") +
+        geom_text(aes(label = PitchNo)) +
+        theme(plot.title = element_text(hjust = 0.5),
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+              panel.background = element_blank(),
+              legend.position = "none")
     
   })
   output$Chase <- renderPlot({
@@ -240,6 +294,24 @@ server = function(input, output, session) {
             panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(),
             legend.position = "none")
+    
+  })
+  
+  output$InPlayStats <- renderDT({
+    inplaydf <- df %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             PitchCall == "InPlay",
+             PlayResult %in% input$Result,
+             TaggedPitchType %in% input$Pitch,
+             Count %in% input$Count,
+             CustomGameID %in% c(input$GameInput))
+    
+    req(nrow(inplaydf) > 0)
+    
+    inplaydf %>%
+      select(PitchNo, Count, BatterSide, TaggedPitchType, RelSpeed, TaggedHitType, ExitSpeed, field_side, PlayResult, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+    
   })
   
   output$WhiffStats <- renderDT({
