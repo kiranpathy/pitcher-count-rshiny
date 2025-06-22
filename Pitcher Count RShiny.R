@@ -28,12 +28,12 @@ library(shinyWidgets)
 
 left <- -8.5/12
 right <- 8.5/12
-top <- 43/12
-bottom <- 20/12
+top <- 40.53/12
+bottom <- 21.06/12
 width <- (right - left) / 3
 height <- (top - bottom) / 3
 
-df <- read_csv("df.csv")
+df <- read_csv("20250620-ThomasMoreStadium-1_unverified copy.csv")
 
 df <- df %>%
   mutate(TaggedPitchType = ifelse(
@@ -43,7 +43,7 @@ df <- df %>%
   mutate(Count = paste0(Balls, "-", Strikes)) %>%
   filter(TaggedPitchType != "Undefined",
          TaggedPitchType != "Other",
-         PitcherTeam == "My_Team")
+         PitcherTeam == "FLO_Y'A")
 
 #in-zone calculations, chase set up, whiff, custom game id
 df <- df %>%
