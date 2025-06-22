@@ -61,15 +61,13 @@ df <- df %>%
   mutate(
     Direction = as.numeric(Direction),
     field_side = case_when(
-      BatterSide == "Right" & Direction <= -45 ~ "Left",
-      BatterSide == "Right" & Direction > -45 & Direction < 45 ~ "Center",
-      BatterSide == "Right" & Direction >= 45 ~ "Right",
-      BatterSide == "Left" & Direction <= -45 ~ "Right",
-      BatterSide == "Left" & Direction > -45 & Direction < 45 ~ "Center",
-      BatterSide == "Left" & Direction >= 45 ~ "Left",
-      TRUE ~ NA_character_
-    )
-  )
+    Direction <= -67.5 ~ "Left",
+    Direction > -67.5 & Direction <= -22.5 ~ "Left Center",
+    Direction > -22.5 & Direction <= 22.5 ~ "Center",
+    Direction > 22.5 & Direction <= 67.5 ~ "Right Center",
+    Direction > 67.5 ~ "Right",
+    TRUE ~ NA_character_
+  ))
 
 #UI
 ui <- navbarPage("Pitchers",
@@ -95,11 +93,13 @@ ui <- navbarPage("Pitchers",
                                                  choices = levels(as.factor(df$Count))),
                               width = 2),
                             mainPanel(
-                              fluidRow(plotOutput("KZone"), plotOutput("InPlay"), DTOutput("InPlayStats"), plotOutput("Whiff"), DTOutput("WhiffStats"), plotOutput("Chase"), DTOutput("ChaseStats"))))),
+                              fluidRow(plotOutput("KZone", height = "1000px", width = "1200px"), plotOutput("InPlay", height = "1000px", width = "1200px"), DTOutput("InPlayStats"), plotOutput("Whiff", height = "1000px", width = "1200px"), DTOutput("WhiffStats"), plotOutput("Chase", height = "1000px", width = "1200px"), DTOutput("ChaseStats"))))),
                  tabPanel("Heatmap",
                           mainPanel(
-                            fluidRow(plotOutput("Heatmap"))))
-)
+                            fluidRow(plotOutput("Heatmap", height = "1000px", width = "1200px")))),
+                 tabPanel("Heatmap (Hard Hit)",
+                          mainPanel(
+                            fluidRow(plotOutput("HeatmapHH", height = "1000px", width = "1200px")))))
 
 #Server
 server = function(input, output, session) {
@@ -163,6 +163,7 @@ server = function(input, output, session) {
            subtitle = "All",
            x = "",
            y = "") +
+      coord_fixed() +
       theme(plot.title = element_text(hjust = 0.5),
             panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(),
@@ -204,6 +205,7 @@ server = function(input, output, session) {
              subtitle = "In Play",
              x = "",
              y = "") +
+        coord_fixed() +
         geom_text(aes(label = PitchNo)) +
         theme(plot.title = element_text(hjust = 0.5),
               panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -247,6 +249,7 @@ server = function(input, output, session) {
            subtitle = "Chase",
            x = "",
            y = "") +
+      coord_fixed() +
       geom_text(aes(label = PitchNo)) +
       theme(plot.title = element_text(hjust = 0.5),
             panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -289,6 +292,7 @@ server = function(input, output, session) {
            subtitle = "Whiff",
            x = "",
            y = "") +
+      coord_fixed() +
       geom_text(aes(label = PitchNo)) +
       theme(plot.title = element_text(hjust = 0.5),
             panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -379,6 +383,7 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Fastball")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
@@ -415,6 +420,7 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Changeup")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
@@ -451,6 +457,7 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Slider")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
@@ -487,6 +494,7 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Curveball")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
@@ -523,6 +531,7 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Cutter")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
@@ -559,6 +568,7 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Sinker")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
@@ -595,6 +605,282 @@ server = function(input, output, session) {
       geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
       xlim(-3,3) + ylim(0, 5) + 
       ggtitle(paste("Splitter")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    ggarrange(FBplot, CHplot, SLplot, CBplot, CUTplot, SNKplot, FSplot, ncol = 3, nrow = 3)
+    
+  })
+  
+  output$HeatmapHH <- renderPlot({
+    
+    heat_colors_interpolated <- colorRampPalette(paletteer_d("RColorBrewer::RdBu", 
+                                                             n = 9,
+                                                             direction = -1))(16)
+    FB <- df %>%
+      filter(TaggedPitchType == "Fastball")
+    
+    FBplot <- FB %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Fastball")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    CH <- df %>%
+      filter(TaggedPitchType == "Changeup")
+    
+    CHplot <- CH %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Changeup")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    SL <- df %>%
+      filter(TaggedPitchType == "Slider")
+    
+    SLplot <- SL %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Slider")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    CB <- df %>%
+      filter(TaggedPitchType == "Curveball")
+    
+    CBplot <- CB %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Curveball")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    CUT <- df %>%
+      filter(TaggedPitchType == "Cutter")
+    
+    CUTplot <- CUT %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Cutter")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    SNK <- df %>%
+      filter(TaggedPitchType == "Sinker")
+    
+    SNKplot <- SNK %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Sinker")) +
+      coord_fixed() +
+      theme(legend.position = "none",
+            plot.title = element_text(color = "black", size = 15, face = "bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(color = "black", size = 1.5, fill = NA))
+    
+    FS <- df %>%
+      filter(TaggedPitchType == "Splitter")
+    
+    FSplot <- FS %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             TaggedPitchType %in% input$Pitch,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             ExitSpeed >= 95,
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(aes(x = PlateLocSide, y = PlateLocHeight)) +
+      stat_density2d_filled() +
+      scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill" , "color")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-3,3) + ylim(0, 5) + 
+      ggtitle(paste("Splitter")) +
+      coord_fixed() +
       theme(legend.position = "none",
             plot.title = element_text(color = "black", size = 15, face = "bold"),
             axis.title.x = element_blank(),
