@@ -39,7 +39,12 @@ df <- df %>%
   mutate(TaggedPitchType = ifelse(
     TaggedPitchType == "SInker", "Sinker", TaggedPitchType
   ),
-  TaggedPitchType = ifelse(TaggedPitchType == "ChangeUp", "Changeup", TaggedPitchType)) %>%
+  TaggedPitchType = ifelse(TaggedPitchType == "ChangeUp", "Changeup", TaggedPitchType),
+  TaggedPitchType = ifelse(
+    TaggedPitchType == "TwoSeamFastBall", "Sinker", TaggedPitchType),
+  TaggedPitchType = ifelse(
+    TaggedPitchType == "FourSeamFastBall", "Fastball", TaggedPitchType),
+  ) %>%
   mutate(Count = paste0(Balls, "-", Strikes)) %>%
   filter(TaggedPitchType != "Undefined",
          TaggedPitchType != "Other",
