@@ -33,21 +33,21 @@ bottom <- 21.06/12
 width <- (right - left) / 3
 height <- (top - bottom) / 3
 
-df <- read_csv("20250621-ThomasMoreStadium-1_unverified.csv")
+df <- read_csv("20250627-Bosse-1_unverified copy.csv")
 
 df <- df %>%
   mutate(
-    TaggedPitchType = case_when(
-      TaggedPitchType %in% c("FourSeamFastBall", "FourSeamFastball", "FourSeam")  ~ "Fastball",
-      TaggedPitchType %in% c("TwoSeamFastBall", "TwoSeamFastball")                ~ "Sinker",
-      TaggedPitchType %in% c("SInker")                                            ~ "Sinker",
-      TaggedPitchType == "ChangeUp"                                               ~ "Changeup",
-      TRUE                                                                        ~ TaggedPitchType
+    AutoPitchType = case_when(
+      AutoPitchType %in% c("FourSeamFastBall", "FourSeamFastball", "FourSeam")  ~ "Fastball",
+      AutoPitchType %in% c("TwoSeamFastBall", "TwoSeamFastball")                ~ "Sinker",
+      AutoPitchType %in% c("SInker")                                            ~ "Sinker",
+      AutoPitchType == "ChangeUp"                                               ~ "Changeup",
+      TRUE                                                                        ~ AutoPitchType
     ),
-      Count = paste0(Balls, "-", Strikes)
+    Count = paste0(Balls, "-", Strikes)
   ) %>%
   filter(
-    !TaggedPitchType %in% c("Undefined", "Other"),
+    !AutoPitchType %in% c("Undefined", "Other"),
     PitcherTeam == "FLO_Y'A"
   )
 
@@ -67,13 +67,13 @@ df <- df %>%
   mutate(
     Direction = as.numeric(Direction),
     field_side = case_when(
-    Direction <= -67.5 ~ "Left",
-    Direction > -67.5 & Direction <= -22.5 ~ "Left Center",
-    Direction > -22.5 & Direction <= 22.5 ~ "Center",
-    Direction > 22.5 & Direction <= 67.5 ~ "Right Center",
-    Direction > 67.5 ~ "Right",
-    TRUE ~ NA_character_
-  ))
+      Direction <= -67.5 ~ "Left",
+      Direction > -67.5 & Direction <= -22.5 ~ "Left Center",
+      Direction > -22.5 & Direction <= 22.5 ~ "Center",
+      Direction > 22.5 & Direction <= 67.5 ~ "Right Center",
+      Direction > 67.5 ~ "Right",
+      TRUE ~ NA_character_
+    ))
 
 #UI
 ui <- navbarPage("Pitchers",
@@ -92,7 +92,7 @@ ui <- navbarPage("Pitchers",
                                 options = list(`actions-box` = TRUE),
                                 multiple = T),
                               checkboxGroupInput("Pitch", label = "Select Pitch Type",
-                                                 choices = levels(as.factor(df$TaggedPitchType))),
+                                                 choices = levels(as.factor(df$AutoPitchType))),
                               checkboxGroupInput("Result", label = "Select Play Result",
                                                  choices = levels(as.factor(df$PlayResult))),
                               pickerInput(
@@ -128,7 +128,7 @@ server = function(input, output, session) {
     updateCheckboxGroupInput(session,
                              "Pitch", "Select Pitch Type",
                              choices = levels(factor(filter(df,
-                                                            Pitcher == isolate(input$Pitcher))$TaggedPitchType))))
+                                                            Pitcher == isolate(input$Pitcher))$AutoPitchType))))
   
   #select pitcher --> update date range
   observeEvent(
@@ -145,10 +145,10 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              PlayResult %in% input$Result,
              Count %in% input$Count,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(TestTrackMan, mapping = aes(x = PlateLocSide, y = PlateLocHeight)) +
-      geom_point(aes(color = TaggedPitchType), size = 3) +
+      geom_point(aes(color = AutoPitchType), size = 3) +
       scale_color_manual(values = c(Changeup = "blue",
                                     Fastball = "black",
                                     Slider = "orange",
@@ -180,48 +180,48 @@ server = function(input, output, session) {
             panel.background = element_blank(),
             legend.position = "right")
   })
-    output$InPlay <- renderPlot({
-      df %>%
-        filter(PitcherTeam == input$Team,
-               Pitcher == input$Pitcher,
-               PlayResult %in% input$Result,
-               Count %in% input$Count,
-               TaggedPitchType %in% input$Pitch,
-               PitchCall == "InPlay",
-               CustomGameID %in% c(input$GameInput)) %>%
-        ggplot(TestTrackMan, mapping = aes(x = PlateLocSide, y = PlateLocHeight)) +
-        geom_point(aes(color = TaggedPitchType), size = 3) +
-        scale_color_manual(values = c(Changeup = "blue",
-                                      Fastball = "black",
-                                      Slider = "orange",
-                                      Curveball = "red",
-                                      Cutter = "green",
-                                      Sinker = "grey",
-                                      Splitter = "purple")) +
-        geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
-        geom_segment(x = left, y = top, xend = right, yend = top) +
-        geom_segment(x = left, y = bottom, xend = left, yend = top) +
-        geom_segment(x = right, y = bottom, xend = right, yend = top) +
-        geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
-        geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
-        geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
-        geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
-        geom_segment(x = left, y = 0, xend = right, yend = 0) +
-        geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
-        geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
-        geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
-        geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
-        xlim(-2.5, 2.5) + ylim(-.5, 5) +
-        labs(title = "Strike Zone",
-             subtitle = "In Play",
-             x = "",
-             y = "") +
-        coord_fixed() +
-        geom_text(aes(label = PitchNo)) +
-        theme(plot.title = element_text(hjust = 0.5),
-              panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-              panel.background = element_blank(),
-              legend.position = "none")
+  output$InPlay <- renderPlot({
+    df %>%
+      filter(PitcherTeam == input$Team,
+             Pitcher == input$Pitcher,
+             PlayResult %in% input$Result,
+             Count %in% input$Count,
+             AutoPitchType %in% input$Pitch,
+             PitchCall == "InPlay",
+             CustomGameID %in% c(input$GameInput)) %>%
+      ggplot(TestTrackMan, mapping = aes(x = PlateLocSide, y = PlateLocHeight)) +
+      geom_point(aes(color = AutoPitchType), size = 3) +
+      scale_color_manual(values = c(Changeup = "blue",
+                                    Fastball = "black",
+                                    Slider = "orange",
+                                    Curveball = "red",
+                                    Cutter = "green",
+                                    Sinker = "grey",
+                                    Splitter = "purple")) +
+      geom_segment(x = left, y = bottom, xend = right, yend = bottom) +
+      geom_segment(x = left, y = top, xend = right, yend = top) +
+      geom_segment(x = left, y = bottom, xend = left, yend = top) +
+      geom_segment(x = right, y = bottom, xend = right, yend = top) +
+      geom_segment(x = left, y = (bottom + height), xend = right, yend = (bottom + height)) +
+      geom_segment(x = left, y = (top - height), xend = right, yend = (top - height)) +
+      geom_segment(x = (left + width), y = bottom, xend = (left + width), yend = top) +
+      geom_segment(x = (right - width), y = bottom, xend = (right - width), yend = top) +
+      geom_segment(x = left, y = 0, xend = right, yend = 0) +
+      geom_segment(x = left, y = 0, xend = left, yend = (4.25/12)) +
+      geom_segment(x = left, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = (4.25/12), xend = 0, yend = (8.5/12)) +
+      geom_segment(x = right, y = 0, xend = right, yend = (4.25/12)) +
+      xlim(-2.5, 2.5) + ylim(-.5, 5) +
+      labs(title = "Strike Zone",
+           subtitle = "In Play",
+           x = "",
+           y = "") +
+      coord_fixed() +
+      geom_text(aes(label = PitchNo)) +
+      theme(plot.title = element_text(hjust = 0.5),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            legend.position = "none")
     
   })
   output$Chase <- renderPlot({
@@ -230,11 +230,11 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              chase == 1,
              PlayResult %in% input$Result,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(TestTrackMan, mapping = aes(x = PlateLocSide, y = PlateLocHeight)) +
-      geom_point(aes(color = TaggedPitchType), size = 3) +
+      geom_point(aes(color = AutoPitchType), size = 3) +
       scale_color_manual(values = c(Changeup = "blue",
                                     Fastball = "black",
                                     Slider = "orange",
@@ -273,11 +273,11 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              whiff == 1,
              PlayResult %in% input$Result,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
       ggplot(TestTrackMan, mapping = aes(x = PlateLocSide, y = PlateLocHeight)) +
-      geom_point(aes(color = TaggedPitchType), size = 3) +
+      geom_point(aes(color = AutoPitchType), size = 3) +
       scale_color_manual(values = c(Changeup = "blue",
                                     Fastball = "black",
                                     Slider = "orange",
@@ -318,14 +318,14 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              PitchCall == "InPlay",
              PlayResult %in% input$Result,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
     
     req(nrow(inplaydf) > 0)
     
     inplaydf %>%
-      select(PitchNo, Count, BatterSide, TaggedPitchType, RelSpeed, TaggedHitType, ExitSpeed, field_side, PlayResult, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+      select(PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, TaggedHitType, ExitSpeed, field_side, PlayResult, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
     
   })
   
@@ -335,14 +335,14 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              whiff == 1,
              PlayResult %in% input$Result,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
     
     req(nrow(whiffdf) > 0)
     
     whiffdf %>%
-      select(PitchNo, Count, BatterSide, TaggedPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+      select(PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
   })
   
   output$ChaseStats <- renderDT({
@@ -351,14 +351,14 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              chase == 1,
              PlayResult %in% input$Result,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
     
     req(nrow(chasedf) > 0)
     
     chasedf %>%
-      select(PitchNo, Count, BatterSide, TaggedPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+      select(PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
   })
   
   output$Heatmap <- renderPlot({
@@ -367,12 +367,12 @@ server = function(input, output, session) {
                                                              n = 9,
                                                              direction = -1))(16)
     FB <- df %>%
-      filter(TaggedPitchType == "Fastball")
+      filter(AutoPitchType == "Fastball")
     
     FBplot <- FB %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -404,12 +404,12 @@ server = function(input, output, session) {
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
     CH <- df %>%
-      filter(TaggedPitchType == "Changeup")
+      filter(AutoPitchType == "Changeup")
     
     CHplot <- CH %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -441,12 +441,12 @@ server = function(input, output, session) {
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
     SL <- df %>%
-      filter(TaggedPitchType == "Slider")
+      filter(AutoPitchType == "Slider")
     
     SLplot <- SL %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -478,12 +478,12 @@ server = function(input, output, session) {
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
     CB <- df %>%
-      filter(TaggedPitchType == "Curveball")
+      filter(AutoPitchType == "Curveball")
     
     CBplot <- CB %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -515,12 +515,12 @@ server = function(input, output, session) {
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
     CUT <- df %>%
-      filter(TaggedPitchType == "Cutter")
+      filter(AutoPitchType == "Cutter")
     
     CUTplot <- CUT %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -552,12 +552,12 @@ server = function(input, output, session) {
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
     SNK <- df %>%
-      filter(TaggedPitchType == "Sinker")
+      filter(AutoPitchType == "Sinker")
     
     SNKplot <- SNK %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -589,12 +589,12 @@ server = function(input, output, session) {
             panel.border = element_rect(color = "black", size = 1.5, fill = NA))
     
     FS <- df %>%
-      filter(TaggedPitchType == "Splitter")
+      filter(AutoPitchType == "Splitter")
     
     FSplot <- FS %>%
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType %in% input$Pitch,
              PlayResult %in% input$Result,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -633,17 +633,17 @@ server = function(input, output, session) {
     
     df_hh <- df %>% 
       filter(!is.na(ExitSpeed),
-        ExitSpeed >= 95)
+             ExitSpeed >= 95)
     
     heat_colors_interpolated <- colorRampPalette(paletteer_d("RColorBrewer::RdBu", 
                                                              n = 9,
                                                              direction = -1))(16)
-   
+    
     FBplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Fastball",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Fastball",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
@@ -688,8 +688,8 @@ server = function(input, output, session) {
     CHplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Changeup",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Changeup",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
@@ -730,12 +730,12 @@ server = function(input, output, session) {
                   panel.border     = element_rect(color = "black", size = 1.5, fill = NA))
         }
       }
-
+    
     SLplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Slider",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Slider",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
@@ -780,8 +780,8 @@ server = function(input, output, session) {
     CBplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Curveball",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Curveball",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
@@ -826,8 +826,8 @@ server = function(input, output, session) {
     CUTplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Cutter",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Cutter",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
@@ -872,8 +872,8 @@ server = function(input, output, session) {
     SNKplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Sinker",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Sinker",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
@@ -918,8 +918,8 @@ server = function(input, output, session) {
     FSplot <- df_hh %>%                           
       filter(PitcherTeam     == input$Team,
              Pitcher         == input$Pitcher,
-             TaggedPitchType == "Splitter",
-             TaggedPitchType %in% input$Pitch,
+             AutoPitchType == "Splitter",
+             AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
