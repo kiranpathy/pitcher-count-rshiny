@@ -28,17 +28,17 @@ library(shinyWidgets)
 
 left <- -8.5/12
 right <- 8.5/12
-top <- 40.53/12
-bottom <- 21.06/12
+top <- 43/12
+bottom <- 20/12
 width <- (right - left) / 3
 height <- (top - bottom) / 3
 
-df <- read_csv("20250627-Bosse-1_unverified copy.csv")
+df <- read_csv("yalls_combined.csv")
 
 df <- df %>%
   mutate(
     AutoPitchType = case_when(
-      AutoPitchType %in% c("FourSeamFastBall", "FourSeamFastball", "FourSeam")  ~ "Fastball",
+      AutoPitchType %in% c("FourSeamFastBall", "FourSeamFastball", "FourSeam", "Four-Seam")  ~ "Fastball",
       AutoPitchType %in% c("TwoSeamFastBall", "TwoSeamFastball")                ~ "Sinker",
       AutoPitchType %in% c("SInker")                                            ~ "Sinker",
       AutoPitchType == "ChangeUp"                                               ~ "Changeup",
@@ -325,7 +325,7 @@ server = function(input, output, session) {
     req(nrow(inplaydf) > 0)
     
     inplaydf %>%
-      select(PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, TaggedHitType, ExitSpeed, field_side, PlayResult, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+      select(Date, PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, TaggedHitType, ExitSpeed, field_side, PlayResult, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
     
   })
   
@@ -342,7 +342,7 @@ server = function(input, output, session) {
     req(nrow(whiffdf) > 0)
     
     whiffdf %>%
-      select(PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+      select(Date, PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
   })
   
   output$ChaseStats <- renderDT({
@@ -358,7 +358,7 @@ server = function(input, output, session) {
     req(nrow(chasedf) > 0)
     
     chasedf %>%
-      select(PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
+      select(Date, PitchNo, Count, BatterSide, AutoPitchType, RelSpeed, InducedVertBreak, HorzBreak, SpinRate, VertApprAngle)
   })
   
   output$Heatmap <- renderPlot({
