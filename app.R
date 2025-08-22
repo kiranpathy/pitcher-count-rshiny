@@ -22,6 +22,7 @@ library(lubridate)
 library(ggpubr)
 library(paletteer)
 library(shinyWidgets)
+library(shinymanager)
 
 #What to make: Whiff plot, chase plot, overall pitch plot, velo distributions, vert/horz movement plot, velo over pitch number (?), exit velo plot (code in zones?)
 #NEED IT TO BE ABLE TO CHANGE W DATE
@@ -116,8 +117,23 @@ ui <- navbarPage("Pitchers",
                           mainPanel(
                             fluidRow(plotOutput("HeatmapWhiff", height = "1000px", width = "1200px")))))
 
+#log in setup
+app_ui <- ui
+ui <- shinymanager::secure_app(app_ui, timeout = 0)
+
 #Server
 server = function(input, output, session) {
+  
+  #log in credentials
+  creds <- data.frame(
+    user     = "staff",
+    password = "floyaBALL25",
+    stringsAsFactors = FALSE
+  )
+  
+  auth <- shinymanager::secure_server(
+    check_credentials = shinymanager::check_credentials(creds)
+  )
   
   #Select Team --> Show those pitchers  
   observeEvent(
