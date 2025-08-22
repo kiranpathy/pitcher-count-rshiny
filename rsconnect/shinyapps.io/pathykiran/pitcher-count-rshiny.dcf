@@ -1,0 +1,13 @@
+name: pitcher-count-rshiny
+title: pitcher-count-rshiny
+username: pathykiran
+account: pathykiran
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15251998
+bundleId: 10807577
+url: https://pathykiran.shinyapps.io/pitcher-count-rshiny/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|20250620-ThomasMoreStadium-1_unverified copy.csv|20250621-ThomasMoreStadium-1_unverified.csv|20250627-Bosse-1_unverified copy.csv|Pitcher Count RShiny.R|README.md|yalls_combined.csv
