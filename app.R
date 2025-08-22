@@ -127,7 +127,7 @@ server = function(input, output, session) {
   #log in credentials
   creds <- data.frame(
     user     = "staff",
-    password = "floyaBALL25",
+    password = "ffyalls2025",
     stringsAsFactors = FALSE
   )
   
