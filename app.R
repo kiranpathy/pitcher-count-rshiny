@@ -92,6 +92,8 @@ ui <- navbarPage("Pitchers",
                                 choices = levels(as.factor(df$CustomGameID)),
                                 options = list(`actions-box` = TRUE),
                                 multiple = T),
+                              checkboxGroupInput("BatterSide", label = "Select Batter Side",
+                                                 choices = levels(as.factor(df$BatterSide))),
                               checkboxGroupInput("Pitch", label = "Select Pitch Type",
                                                  choices = levels(as.factor(df$AutoPitchType))),
                               checkboxGroupInput("Result", label = "Select Play Result",
@@ -164,6 +166,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count %in% input$Count,
              AutoPitchType %in% input$Pitch,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -205,6 +208,7 @@ server = function(input, output, session) {
       filter(PitcherTeam == input$Team,
              Pitcher == input$Pitcher,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count %in% input$Count,
              AutoPitchType %in% input$Pitch,
              PitchCall == "InPlay",
@@ -250,6 +254,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              chase == 1,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -293,6 +298,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              whiff == 1,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -338,6 +344,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              ExitSpeed >= 95,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput)) %>%
@@ -383,6 +390,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              PitchCall == "InPlay",
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
@@ -400,6 +408,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              whiff == 1,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
@@ -416,6 +425,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              chase == 1,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
@@ -432,6 +442,7 @@ server = function(input, output, session) {
              Pitcher == input$Pitcher,
              ExitSpeed >= 95,
              PlayResult %in% input$Result,
+             BatterSide %in% input$BatterSide,
              AutoPitchType %in% input$Pitch,
              Count %in% input$Count,
              CustomGameID %in% c(input$GameInput))
@@ -453,6 +464,7 @@ server = function(input, output, session) {
              AutoPitchType == "Fastball",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -499,6 +511,7 @@ server = function(input, output, session) {
              AutoPitchType == "Changeup",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -545,6 +558,7 @@ server = function(input, output, session) {
              AutoPitchType == "Slider",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -591,6 +605,7 @@ server = function(input, output, session) {
              AutoPitchType == "Curveball",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -637,6 +652,7 @@ server = function(input, output, session) {
              AutoPitchType == "Cutter",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -683,6 +699,7 @@ server = function(input, output, session) {
              AutoPitchType == "Sinker",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -729,6 +746,7 @@ server = function(input, output, session) {
              AutoPitchType == "Splitter",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -789,6 +807,7 @@ server = function(input, output, session) {
              AutoPitchType == "Fastball",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -835,6 +854,7 @@ server = function(input, output, session) {
              AutoPitchType == "Changeup",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -881,6 +901,7 @@ server = function(input, output, session) {
              AutoPitchType == "Slider",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -927,6 +948,7 @@ server = function(input, output, session) {
              AutoPitchType == "Curveball",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -973,6 +995,7 @@ server = function(input, output, session) {
              AutoPitchType == "Cutter",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1019,6 +1042,7 @@ server = function(input, output, session) {
              AutoPitchType == "Sinker",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1065,6 +1089,7 @@ server = function(input, output, session) {
              AutoPitchType == "Splitter",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1124,6 +1149,7 @@ server = function(input, output, session) {
              AutoPitchType == "Fastball",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1170,6 +1196,7 @@ server = function(input, output, session) {
              AutoPitchType == "Changeup",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1216,6 +1243,7 @@ server = function(input, output, session) {
              AutoPitchType == "Slider",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1262,6 +1290,7 @@ server = function(input, output, session) {
              AutoPitchType == "Curveball",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1308,6 +1337,7 @@ server = function(input, output, session) {
              AutoPitchType == "Cutter",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1354,6 +1384,7 @@ server = function(input, output, session) {
              AutoPitchType == "Sinker",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
@@ -1400,6 +1431,7 @@ server = function(input, output, session) {
              AutoPitchType == "Splitter",
              AutoPitchType %in% input$Pitch,
              PlayResult      %in% input$Result,
+             BatterSide %in% input$BatterSide,
              Count           %in% input$Count,
              CustomGameID    %in% input$GameInput) %>%         
       
